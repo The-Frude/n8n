@@ -1,13 +1,19 @@
 services:
   - type: web
-    name: n8n
+    name: n8n-render
     env: docker
     plan: free
-    dockerfilePath: ./Dockerfile
+    image:
+      # using official pre-built image 
+      url: docker.io/n8nio/n8n:latest
+    dockerfilePath: Dockerfile
     envVars:
+      - key: NODE_OPTIONS
+        value: "--max-old-space-size=400"
       - key: N8N_BASIC_AUTH_ACTIVE
         value: "true"
       - key: N8N_BASIC_AUTH_USER
         value: "gfreund"
       - key: N8N_BASIC_AUTH_PASSWORD
         value: "TheArc123"
+    healthCheckPath: "/"
